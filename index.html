@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agaba Kelly — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b1220;
+    --ink-2:#101a2e;
+    --paper:#edeef0;
+    --paper-dim:#94a3b8;
+    --teal:#5eead4;
+    --amber:#f5a623;
+    --line: rgba(237,238,240,0.12);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--teal); color:var(--ink);}
+
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.02em;}
+
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  a{color:inherit; text-decoration:none;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    color:var(--teal);
+  }
+  .brand span{color:var(--paper-dim);}
+  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--paper-dim);}
+  .navlinks a{transition:color .2s;}
+  .navlinks a:hover{color:var(--paper); }
+  .navlinks a:focus-visible, a:focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:2px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:110px 0 90px;
+    position:relative;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:60px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--amber);
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 0 4px rgba(245,166,35,0.15);
+  }
+  .hero h1{
+    font-size:clamp(40px, 5.4vw, 68px);
+    line-height:1.04;
+    margin-bottom:22px;
+  }
+  .hero h1 .accent{color:var(--teal);}
+  .hero p.lead{
+    color:var(--paper-dim);
+    font-size:18px;
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    padding:13px 24px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    transition:transform .15s ease, background .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{
+    background:var(--teal); color:var(--ink);
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--paper);
+  }
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal);}
+
+  .stack-row{
+    display:flex; gap:18px; margin-top:42px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--paper-dim);
+    flex-wrap:wrap;
+  }
+  .stack-row span{
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:4px;
+  }
+
+  /* photo block */
+  .photo-card{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    aspect-ratio:4/5;
+    background:linear-gradient(160deg, #14233f, #0b1220 70%);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:flex-end;
+  }
+  .photo-card img{
+    width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+    filter:grayscale(15%) contrast(1.04);
+  }
+  .photo-card .photo-fallback{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk'; font-weight:700;
+    font-size:96px; color:rgba(94,234,212,0.18);
+  }
+  .photo-tag{
+    position:relative; z-index:2;
+    margin:18px;
+    background:rgba(11,18,32,0.78);
+    backdrop-filter:blur(6px);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 16px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    width:calc(100% - 36px);
+    display:flex; justify-content:space-between;
+  }
+  .photo-tag b{color:var(--paper); font-weight:600; display:block; font-family:'Inter';}
+  .photo-tag .age{color:var(--amber);}
+
+  /* ---------- Section shell ---------- */
+  section{padding:90px 0; border-top:1px solid var(--line);}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:48px; gap:24px; flex-wrap:wrap;
+  }
+  .section-head .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--teal); margin-bottom:10px; display:block;
+  }
+  .section-head h2{font-size:clamp(28px,3.4vw,38px);}
+  .section-head p{color:var(--paper-dim); max-width:420px; font-size:15px;}
+
+  /* ---------- Live reviews (browser-tab style cards) ---------- */
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:20px;
+  }
+  .review-card{
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--ink-2);
+    transition:border-color .2s, transform .2s;
+  }
+  .review-card:hover{border-color:var(--teal); transform:translateY(-4px);}
+  .browser-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,0.02);
+  }
+  .browser-bar .dots{display:flex; gap:5px;}
+  .browser-bar .dots i{width:8px; height:8px; border-radius:50%; background:#2c3a52; display:block;}
+  .browser-bar .url{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; color:var(--paper-dim);
+    background:var(--ink);
+    border-radius:4px; padding:3px 10px; flex:1;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .review-body{padding:20px;}
+  .review-body h3{font-size:17px; margin-bottom:6px;}
+  .review-status{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    color:var(--teal); margin-bottom:12px;
+  }
+  .review-status .pulse{
+    width:7px; height:7px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 3px rgba(94,234,212,0.18);
+  }
+  .review-body p{color:var(--paper-dim); font-size:14px; margin-bottom:16px;}
+  .review-link{
+    font-size:13px; font-weight:600; color:var(--amber);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .review-link:hover{text-decoration:underline;}
+
+  /* ---------- Case studies ---------- */
+  .case-list{display:flex; flex-direction:column;}
+  .case-row{
+    display:grid;
+    grid-template-columns:90px 1.4fr 1fr 110px;
+    gap:24px;
+    align-items:center;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    transition:background .2s;
+  }
+  .case-row:hover{background:rgba(94,234,212,0.03);}
+  .case-row .cid{font-family:'JetBrains Mono', monospace; color:var(--paper-dim); font-size:13px;}
+  .case-row h3{font-size:19px; margin-bottom:6px;}
+  .case-row .desc{color:var(--paper-dim); font-size:14px;}
+  .case-tags{display:flex; gap:8px; flex-wrap:wrap;}
+  .case-tags span{
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    border:1px solid var(--line); padding:4px 9px; border-radius:4px;
+    color:var(--paper-dim);
+  }
+  .case-row .view{
+    justify-self:end;
+    font-size:13px; font-weight:600; color:var(--teal);
+    border:1px solid var(--line); padding:8px 14px; border-radius:6px;
+    white-space:nowrap;
+  }
+  .case-row .view:hover{border-color:var(--teal);}
+
+  /* ---------- Testimonials paired with projects ---------- */
+  .testi-grid{display:flex; flex-direction:column; gap:18px;}
+  .testi-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .testi-project{
+    background:var(--ink-2);
+    padding:28px;
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+  }
+  .testi-project .ptag{font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--amber); margin-bottom:8px;}
+  .testi-project h3{font-size:18px; margin-bottom:8px;}
+  .testi-project p{font-size:13px; color:var(--paper-dim);}
+  .testi-quote{
+    padding:28px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .testi-quote p{font-size:15px; color:var(--paper); margin-bottom:16px; font-style:italic;}
+  .quote-person{display:flex; align-items:center; gap:12px;}
+  .avatar-dot{
+    width:36px; height:36px; border-radius:50%;
+    background:linear-gradient(135deg, var(--teal), var(--amber));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk'; font-weight:700; font-size:13px; color:var(--ink);
+  }
+  .quote-person .who b{display:block; font-size:14px;}
+  .quote-person .who span{font-size:12px; color:var(--paper-dim);}
+
+  @media(max-width:760px){
+    .testi-row{grid-template-columns:1fr;}
+    .testi-project{border-right:none; border-bottom:1px solid var(--line);}
+  }
+
+  /* ---------- Skills strip ---------- */
+  .skills-strip{
+    display:flex; flex-wrap:wrap; gap:14px;
+  }
+  .skill-pill{
+    border:1px solid var(--line); border-radius:30px;
+    padding:10px 18px; font-size:13px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .skill-pill i{width:6px; height:6px; border-radius:50%; background:var(--teal); display:block;}
+
+  /* ---------- Contact ---------- */
+  .contact-grid{
+    display:grid; grid-template-columns:1.2fr 1fr; gap:50px; align-items:start;
+  }
+  .contact-grid h2{font-size:clamp(30px,4vw,46px); margin-bottom:18px;}
+  .contact-grid p{color:var(--paper-dim); max-width:440px; margin-bottom:30px;}
+  .contact-list{display:flex; flex-direction:column; gap:16px;}
+  .contact-item{
+    display:flex; align-items:center; justify-content:space-between;
+    border:1px solid var(--line); border-radius:8px; padding:16px 20px;
+    transition:border-color .2s;
+  }
+  .contact-item:hover{border-color:var(--teal);}
+  .contact-item .label{font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--paper-dim);}
+  .contact-item .value{font-size:15px; font-weight:600; margin-top:3px;}
+  .contact-item .arrow{color:var(--teal); font-size:18px;}
+
+  @media(max-width:760px){
+    .contact-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Footer / status bar ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:18px 0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--paper-dim);
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer .status{display:flex; align-items:center; gap:8px;}
+  footer .status .pulse{width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 3px rgba(94,234,212,0.18);}
+
+  @media(max-width:900px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .photo-card{max-width:380px;}
+    .case-row{grid-template-columns:1fr; gap:10px;}
+    .case-row .view{justify-self:start;}
+    .navlinks{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">agaba<span>.</span>kelly<span>()</span></div>
+    <div class="navlinks">
+      <a href="#work">live work</a>
+      <a href="#cases">case studies</a>
+      <a href="#testimonials">testimonials</a>
+      <a href="#contact">contact</a>
+    </div>
+    <a href="#contact" class="btn btn-ghost" style="padding:9px 18px; font-size:13px;">Hire me</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>AVAILABLE FOR FREELANCE WORK</div>
+      <h1>Agaba Kelly builds<br>fast, clean <span class="accent">web&nbsp;products</span><br>for local businesses.</h1>
+      <p class="lead">20-year-old web developer based in Uganda, turning ideas into responsive, dependable websites and web apps — from first sketch to live deployment.</p>
+      <div class="hero-ctas">
+        <a href="#cases" class="btn btn-primary">View case studies →</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+      <div class="stack-row">
+        <span>HTML / CSS</span>
+        <span>React</span>
+        <span>Tailwind CSS</span>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="https://merrylandschools.ac.ug/assets/kigungu/agaba_kelly.jpg" alt="Portrait of Agaba Kelly" onerror="this.style.display='none'">
+      <div class="photo-fallback">AK</div>
+      <div class="photo-tag">
+        <div><b>Agaba Kelly</b>Web Developer</div>
+        <div class="age">20 yrs</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- LIVE REVIEWS OF PREVIOUS WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">// LIVE PROJECTS</span>
+        <h2>See the work running live</h2>
+      </div>
+      <p>Click through to the actual deployed sites — no screenshots, just the real thing in your browser.</p>
+    </div>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="browser-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url">amaz-furniture.pages.dev</div>
+        </div>
+        <div class="review-body">
+          <div class="review-status"><span class="pulse"></span>LIVE</div>
+          <h3>Amaz Furniture</h3>
+          <p>A furniture brand showcase site with a clean catalogue layout and product browsing.</p>
+          <a href="https://amaz-furniture.pages.dev/" target="_blank" rel="noopener" class="review-link">Visit live site →</a>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="browser-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url">garment-ck2.pages.dev</div>
+        </div>
+        <div class="review-body">
+          <div class="review-status"><span class="pulse"></span>LIVE</div>
+          <h3>Garment</h3>
+          <p>A garment/clothing store site built for browsing and presenting a product range.</p>
+          <a href="https://garment-ck2.pages.dev/" target="_blank" rel="noopener" class="review-link">Visit live site →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="cases">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">// CASE STUDIES</span>
+        <h2>How each project came together</h2>
+      </div>
+      <p>The brief, the build, and the result — a closer look behind three recent projects.</p>
+    </div>
+
+    <div class="case-list">
+      <div class="case-row">
+        <div class="cid">CS-01</div>
+        <div>
+          <h3>Amaz Furniture</h3>
+          <div class="desc">Giving a furniture business a clean, browsable online catalogue to showcase pieces beyond word-of-mouth.</div>
+        </div>
+        <div class="case-tags"><span>Catalogue Site</span><span>Responsive UI</span></div>
+        <a href="https://amaz-furniture.pages.dev/" target="_blank" rel="noopener" class="view">View live site</a>
+      </div>
+
+      <div class="case-row">
+        <div class="cid">CS-02</div>
+        <div>
+          <h3>Garment</h3>
+          <div class="desc">Building a fast, mobile-friendly storefront for a clothing brand to present its product range online.</div>
+        </div>
+        <div class="case-tags"><span>E-commerce</span><span>Product Showcase</span></div>
+        <a href="https://garment-ck2.pages.dev/" target="_blank" rel="noopener" class="view">View live site</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS NEXT TO PROJECTS -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">// CLIENT TESTIMONIALS</span>
+        <h2>What clients say, next to what was built</h2>
+      </div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-row">
+        <div class="testi-project">
+          <div class="ptag">PROJECT</div>
+          <h3>Amaz Furniture</h3>
+          <p>An online catalogue site for browsing the full furniture range.</p>
+        </div>
+        <div class="testi-quote">
+          <p>"Agaba understood exactly what we needed. Customers can now browse our pieces online before ever stepping into the showroom."</p>
+          <div class="quote-person">
+            <div class="avatar-dot">AM</div>
+            <div class="who"><b>Amani Mbabazi</b><span>Owner, Amaz Furniture</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-row">
+        <div class="testi-project">
+          <div class="ptag">PROJECT</div>
+          <h3>Garment</h3>
+          <p>A mobile-friendly storefront for showcasing the clothing range.</p>
+        </div>
+        <div class="testi-quote">
+          <p>"The site loads fast and looks great on phones, which is how most of our customers shop. Great communication throughout the build."</p>
+          <div class="quote-person">
+            <div class="avatar-dot">CK</div>
+            <div class="who"><b>Catherine Kobusingye</b><span>Founder, Garment</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">// TOOLKIT</span>
+        <h2>What I work with</h2>
+      </div>
+    </div>
+    <div class="skills-strip">
+      <div class="skill-pill"><i></i>HTML &amp; CSS</div>
+      <div class="skill-pill"><i></i>React</div>
+      <div class="skill-pill"><i></i>Tailwind CSS</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="tag">// GET IN TOUCH</span>
+      <h2>Let's build your next site.</h2>
+      <p>Open to freelance projects, contract work, and long-term collaborations with local businesses and teams.</p>
+      <a href="mailto:agaba.kelly@example.com" class="btn btn-primary">Email me</a>
+    </div>
+    <div class="contact-list">
+      <a href="mailto:agaba.kelly@example.com" class="contact-item">
+        <div><div class="label">EMAIL</div><div class="value">agaba.kelly@example.com</div></div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="tel:+256702587863" class="contact-item">
+        <div><div class="label">PHONE / WHATSAPP</div><div class="value">0702 587 863</div></div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#" class="contact-item">
+        <div><div class="label">GITHUB</div><div class="value">github.com/agabakelly</div></div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#" class="contact-item">
+        <div><div class="label">LINKEDIN</div><div class="value">linkedin.com/in/agabakelly</div></div>
+        <span class="arrow">→</span>
+      </a>
+      <div class="contact-item">
+        <div><div class="label">LOCATION</div><div class="value">Kampala, Uganda</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Agaba Kelly. Built from scratch, line by line.</div>
+    <div class="status"><span class="pulse"></span>Currently accepting new projects</div>
+  </div>
+</footer>
+
+</body>
+</html>
